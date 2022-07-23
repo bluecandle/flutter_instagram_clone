@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clone_instagram/src/app.dart';
+import 'package:flutter_clone_instagram/src/binding/init_binding.dart';
 import 'package:get/route_manager.dart';
 
 void main() {
@@ -12,12 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        title: 'Flutter Demo',
+        title: 'Instagram Clone',
         theme: ThemeData(
             primarySwatch: Colors.blue,
             appBarTheme: const AppBarTheme(
                 backgroundColor: Colors.white,
                 titleTextStyle: TextStyle(color: Colors.black))),
+        initialBinding: InitBinding(),
         home: const App());
   }
 }
