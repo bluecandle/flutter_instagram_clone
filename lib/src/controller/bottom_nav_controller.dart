@@ -7,14 +7,18 @@ import 'package:get/get.dart';
 
 enum PageName { HOME, SEARCH, UPLOAD, ACTIVITY, MYPAGE }
 
+/**
+ * @note BottomNavigation 동작 전체를 관리.
+ */
 class BottomNavController extends GetxController {
   RxInt pageIndex = 0.obs;
 
   // 스택 구조로 히스토리 구성해보자.
   List<int> bottomHistory = [0];
 
+  // app.dart > Scaffold > BottomNavigationBar > onTap 에서 사용되도록 만들어짐.
+  // pageIndex 값을 BottomNavigationBar 에서 currentIndex 로 사용하고 있고, 사용자 동작에 따라 해당 값을 변경시키도록 하는 역할.
   void changeBottomNav(int value, {bool hasGesture = true}) {
-    //
     var page = PageName.values[value];
     switch (page) {
       // UPLOAD 만 다른 동작이 필요하고, 다른 case 들은 같은 동작이 수행되기 때문에, 아래 구조처럼 하나만 떼어놓고 나머지는 몰아놓는 형태로 구성.
@@ -33,7 +37,10 @@ class BottomNavController extends GetxController {
 
   void _changePage(int value, {bool hasGesture = true}) {
     pageIndex(value);
-    // hasGesture 값이 false 인 경우 > 사용자가 back button 을 눌러서 willPopAction 을 호출시킨 경우에는 false 로 넘어오겠지!
+    // hasGesture 값이 false 인 경우
+    // 사용자가 back button 을 눌러서 willPopAction 을 호출시킨 경우에는 false 로 넘어옴. 그 경우 잡기.
+    // 왜 잡느냐?? 그 때는 history 에 기록을 추가하면 안 되기 때문에, 기껏 willPopAction 함수 안에서 기록 제거해놨는데,
+    // 페이지 변경하면서 다시 페이지 기록 추가되면 의미가 없음!
     if (!hasGesture) return;
 
     // history 중복 추가가 되는 것을 막기 위함. 대신, 하나의 페이지는 한 번의 기록만 남는 형태로 하는 버전

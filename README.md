@@ -35,5 +35,22 @@ agram
 const SizedBox(height: 7),
 ```
 
-## 강의 3
+## 강의 3 홈화면 UI
 [링크](https://www.youtube.com/watch?v=IWdHaU2NMu0&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=3)
+
+- 화면 UI 만들기 중심.
+- crossAxisAlignment > How the children should be placed along the cross axis in a flex layout.
+- expandable_text
+    - 유용한 패키지! (접기 가능한 텍스트 영역)
+- GestureDetector
+    
+    ```dart
+    GestureDetector(
+        onTap: () {},
+        child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: ImageData(IconsPath.directMessage, width: 50)),
+      )
+    ```
+    
+    - 제스처 감지하고 싶은 영역을 GestureDetector 로 감싸고, onTap 등의 eventListener 함수에 원하는 동작을 집어넣는 패턴인듯.
