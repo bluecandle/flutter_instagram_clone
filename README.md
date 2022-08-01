@@ -54,3 +54,10 @@ const SizedBox(height: 7),
     ```
     
     - 제스처 감지하고 싶은 영역을 GestureDetector 로 감싸고, onTap 등의 eventListener 함수에 원하는 동작을 집어넣는 패턴인듯.
+
+## 강의 4 검색 UI 크기가 다른 이미지 gridview?
+[링크](https://youtu.be/s5CblO_hsf8)
+
+- gridview 인데, 두 가지 칸을 동시에 차지하는 구역을 어떻게 만들 것인가?
+- search 영역 누르면 화면 전환되는 부분도 구현.
+- bottom navigation 이 살아있는 상태임 > **nested routing** > search 영역 안에서 별도의 routing 이 존재하는 것!
