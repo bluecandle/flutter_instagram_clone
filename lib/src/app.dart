@@ -30,8 +30,15 @@ class App extends GetView<BottomNavController> {
                     index: controller.pageIndex.value,
                     children: [
                       const Home(),
-                      const Search(),
-                      Container(child: Center(child: Text('SEARCH'))),
+                      // Search 상세 페이지에서도 bottom navigation 을 유지 해보자 (GetX 사용하지 않고!)
+                      Navigator(
+                        // route 처리를 하기 위함.
+                        key: controller.searchPageNavigationKey,
+                        onGenerateRoute: (routeSetting) {
+                          return MaterialPageRoute(
+                              builder: (context) => const Search());
+                        },
+                      ),
                       Container(child: Center(child: Text('UPLOAD'))),
                       Container(child: Center(child: Text('ACTIVITY'))),
                       Container(child: Center(child: Text('MYPAGE'))),

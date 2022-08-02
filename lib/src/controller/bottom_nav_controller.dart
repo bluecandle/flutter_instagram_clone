@@ -11,7 +11,12 @@ enum PageName { HOME, SEARCH, UPLOAD, ACTIVITY, MYPAGE }
  * @note BottomNavigation 동작 전체를 관리.
  */
 class BottomNavController extends GetxController {
+  // 다른 파일에서 간편하게 해당 클래스 호출(인스턴스화) 하도록 함.
+  static BottomNavController get to => Get.find();
   RxInt pageIndex = 0.obs;
+  // 검색 상세화면에서 쓰임.
+  GlobalKey<NavigatorState> searchPageNavigationKey =
+      GlobalKey<NavigatorState>();
 
   // 스택 구조로 히스토리 구성해보자.
   List<int> bottomHistory = [0];
@@ -74,8 +79,19 @@ class BottomNavController extends GetxController {
               ));
       return true;
     } else {
+      // 검색 페이지 내부의 nested routing 을 위함.
+      // bottomHistory.last > 현재 페이지
+      var page = PageName.values[bottomHistory.last];
+      // 현재 페이지가 검색 페이지라면...
+      if (page == PageName.SEARCH) {
+        // maybePop > pop 할게 있냐 없냐 확인. 있으면 true
+        var value = await searchPageNavigationKey.currentState!.maybePop();
+        // 현재 페이지(검색 페이지) 에서 pop 할게 있다 > return false > 아무것도 안하겠다!
+        // 현재 페이지(검색 페이지) 에서 pop 할게 없다 > 다음 코드로 넘어감 > 아래 흐름을 타게됨.
+        if (value) return false;
+      }
+
       // 쌓인 기록 있다 == 여기서 뒤로가기 누르면 뒤로 간다! (안 끈다 > false)
-      print('goto before page');
       // bottomHistory.removeAt(bottomHistory.length - 1);
       bottomHistory.removeLast();
 
