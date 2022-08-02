@@ -32,7 +32,7 @@ class Search extends StatelessWidget {
     /* 
     특정 부분에는 두 칸을 차지하고, 나머지는 한 칸을 채워주는 형태의 gridview 를 만든다!
     그냥 한 칸 한 칸 동일하다면 gridview 쓰면 간단.
-     */
+     *
     return SingleChildScrollView(
       child:
     )
