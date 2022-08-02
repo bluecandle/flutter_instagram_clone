@@ -61,3 +61,9 @@ const SizedBox(height: 7),
 - gridview 인데, 두 가지 칸을 동시에 차지하는 구역을 어떻게 만들 것인가?
 - search 영역 누르면 화면 전환되는 부분도 구현.
 - bottom navigation 이 살아있는 상태임 > **nested routing** > search 영역 안에서 별도의 routing 이 존재하는 것!
+- quiver lib
+- List.generate -> map 함수랑 같은 기능으로 보임.
+
+## 강의 5 중첩 라우팅 관리
+[링크](https://www.youtube.com/watch?v=zJBWAGnUgK4&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=5)
+
