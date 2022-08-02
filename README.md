@@ -67,6 +67,8 @@ const SizedBox(height: 7),
 ## 강의 5 중첩 라우팅 관리
 [링크](https://www.youtube.com/watch?v=zJBWAGnUgK4&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=5)
 
+- Getx + Navigator
+
 - UI 구성할때, 어떤 부분에서 빈 공간을 많이 차지하고 있는지 확인하고 싶다??
     - 의심되는 부분을 Container widget 으로 감싼 후에, 색깔을 빨간색같은 눈에 띄는 색으로 변경해서 차지하는 영역이 어떤지 확인하면 도움이 된다.
 - appBar
