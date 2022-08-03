@@ -81,7 +81,7 @@ class App extends GetView<BottomNavController> {
                           icon: Container(
                               width: 30,
                               height: 30,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   shape: BoxShape.circle, color: Colors.grey)),
                           label: 'home'),
                     ],

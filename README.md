@@ -86,3 +86,30 @@ const SizedBox(height: 7),
     - bottom nav controller 에서 구현했던 willPopAction 함수의 활용
         - 검색 페이지가 편재 페이지일때, pop 할 페이지가 있다? (검색 페이지의 route history 가 존재한다 > 그리고 이건 Navigator + Navigator GlobalKey 에 의해 관리됨) > willPopAction 함수 다른 로직 타지 않고 화면 이동만 진행.
         - 검색 페이지가 편재 페이지일때, pop 할 페이지가 없다? (검색 페이지의 route history 존재 x ) > willPopAction 함수의 다른 로직 타고, 화면 이동도 진행.
+
+## 강의 6 업로드 화면 구성
+[https://www.youtube.com/watch?v=nHo6DozCG_g&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=6](https://www.youtube.com/watch?v=nHo6DozCG_g&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=6)
+
+- 그리드뷰 생성 코드 (with builder, SliverGridDelegateWithFixedCrossAxisCount)
+
+```dart
+return GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            mainAxisSpacing: 1,
+            crossAxisSpacing: 1,
+            childAspectRatio: 1),
+        itemCount: 100,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(color: Colors.red);
+        });
+```
+
+- GridView 도 스크롤이 기본적으로 지원됨, 근데 GridView 를 SingleChildScrollView 안에다가 사용하다보니까, 스크롤이 충돌이 발생할 수 있음.
+    - 그리드뷰가 스크롤을 지원하지 않는 방식으로 전환하면 해결할 수 있음.
+        - `physics: const NeverScrollableScrollPhysics(),`
+        - `shrinkWrap: true,`
+
+## 강의 7 업로드 화면 기능 개발
