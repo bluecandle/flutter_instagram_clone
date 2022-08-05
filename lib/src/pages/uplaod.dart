@@ -1,12 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clone_instagram/src/components/image_data.dart';
-import 'package:get/get.dart';
+import 'package:photo_manager/photo_manager.dart';
 
-class Upload extends StatelessWidget {
+// Getx 사용하지 않고, flutter stateful widget 사용
+// Getx 사용하지 않는 프로젝트에서도 모듈처럼 사용할 수 있도록!
+class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
+
+  @override
+  State<Upload> createState() => _UploadState();
+}
+
+class _UploadState extends State<Upload> {
+  var albums = <AssetPathEntity>[];
+  String headerTitle = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadPhotos();
+  }
+
+  void _loadPhotos() async {
+    var result = await PhotoManager.requestPermissionExtend();
+    if (result.isAuth) {
+      var albums = await PhotoManager.getAssetPathList(
+          type: RequestType.image,
+          filterOption: FilterOptionGroup(
+              imageOption: const FilterOption(
+                  sizeConstraint:
+                      SizeConstraint(minHeight: 100, minWidth: 100)),
+              orders: [
+                // 최신 이미지를 먼저 보도록 (asc: false 니까 desc 로 나와서.)
+                const OrderOption(type: OrderOptionType.createDate, asc: false)
+              ]));
+      _loadData();
+    } else {
+      // message 권한 요청
+    }
+  }
+
+  void _loadData() async {
+    headerTitle = albums.first.name;
+    await _pagingPhotos();
+    update();
+  }
+
+  Future<void> _pagingPhotos() async{
+    await albums.first.getAssetListPaged(page: 0, size: 30)
+  }
+
+  // 매번 setState 안에 업데이트 내용 넣기 번거로워서 update 함수 만들어서 사용.
+  void update() => setState((() {}));
+
   Widget _imagePreview() {
     // width, height 같게 추출해서 정사각형 형태 만들기
-    return Container(width: Get.width, height: Get.width, color: Colors.grey);
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+        // Get 사용하지 않기 위해서 변경
+        // width: Get.width,
+        // height: Get.width,
+        width: width,
+        height: width,
+        color: Colors.grey);
   }
 
   Widget _header() {
@@ -16,8 +73,9 @@ class Upload extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(5.0),
           child: Row(
-            children: const [
-              Text('갤러리', style: TextStyle(color: Colors.black, fontSize: 18)),
+            children: [
+              Text(headerTitle,
+                  style: TextStyle(color: Colors.black, fontSize: 18)),
               Icon(Icons.arrow_drop_down)
             ],
           ),

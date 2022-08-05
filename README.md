@@ -113,3 +113,7 @@ return GridView.builder(
         - `shrinkWrap: true,`
 
 ## 강의 7 업로드 화면 기능 개발
+https://www.youtube.com/watch?v=1gLukLy2LJ0&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=7
+
+- PhotoManager
+  - 
