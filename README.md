@@ -116,4 +116,4 @@ return GridView.builder(
 https://www.youtube.com/watch?v=1gLukLy2LJ0&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=7
 
 - PhotoManager
-  - 
+- builder 함수를 매개변수로 지정하여 같은 _photoWidet 함수를 호출하지만 조금 다른 결과물이 나오도록 만듦.
