@@ -22,7 +22,6 @@ class _UploadState extends State<Upload> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loadPhotos();
   }
@@ -40,6 +39,30 @@ class _UploadState extends State<Upload> {
                 // 최신 이미지를 먼저 보도록 (asc: false 니까 desc 로 나와서.)
                 const OrderOption(type: OrderOptionType.createDate, asc: false)
               ]));
+
+      // 앨범 갯수 변화에 따른 modalBottomSheet 동작 확인하기 위한 테스트
+      albums.addAll([
+        AssetPathEntity(id: "test0", name: "test0"),
+        AssetPathEntity(id: "test1", name: "test1"),
+        AssetPathEntity(id: "test2", name: "test2"),
+        AssetPathEntity(id: "test3", name: "test3"),
+        AssetPathEntity(id: "test4", name: "test4"),
+        AssetPathEntity(id: "test5", name: "test5"),
+        AssetPathEntity(id: "test6", name: "test6"),
+        AssetPathEntity(id: "test7", name: "test7"),
+        AssetPathEntity(id: "test8", name: "test8"),
+        AssetPathEntity(id: "test9", name: "test9"),
+        AssetPathEntity(id: "test0", name: "test0"),
+        AssetPathEntity(id: "test1", name: "test1"),
+        AssetPathEntity(id: "test2", name: "test2"),
+        AssetPathEntity(id: "test3", name: "test3"),
+        AssetPathEntity(id: "test4", name: "test4"),
+        AssetPathEntity(id: "test5", name: "test5"),
+        AssetPathEntity(id: "test6", name: "test6"),
+        AssetPathEntity(id: "test7", name: "test7"),
+        AssetPathEntity(id: "test8", name: "test8"),
+        AssetPathEntity(id: "test9", name: "test9"),
+      ]);
       _loadData();
     } else {
       // message 권한 요청
@@ -84,14 +107,66 @@ class _UploadState extends State<Upload> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Row(
-            children: [
-              Text(headerTitle,
-                  style: const TextStyle(color: Colors.black, fontSize: 18)),
-              const Icon(Icons.arrow_drop_down)
-            ],
+        GestureDetector(
+          onTap: () {
+            // 화면 아래에서 modal 밀려 올라오는 위젯
+            showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))),
+
+                // 앨범 갯수에 따라 스크롤 기능 사용 여부 지정.
+                isScrollControlled: albums.length > 10 ? true : false,
+                // 화면 전체를 꽉 채우지만, 화면 상단을 벗어나지는 않는 정도로 화면을 두기 위한 옵션 설정 요령
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height -
+                        MediaQuery.of(context).padding.top),
+                builder: (_) => SizedBox(
+                      // 앨범 갯수에 따라서 height 지정.
+                      height: albums.length > 10
+                          ? Size.infinite.height
+                          : albums.length * 60,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            // 상단에 드래그가 가능하다는 의미를 나타내는 형태를 이렇게 구현 가능.
+                            Center(
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 7),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.black54,
+                                ),
+                                width: 40,
+                                height: 4,
+                              ),
+                            ),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: List.generate(
+                                    albums.length,
+                                    (index) => Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 15, horizontal: 15),
+                                        child: Text(albums[index].name))),
+                              )),
+                            )
+                          ]),
+                    ));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Row(
+              children: [
+                Text(headerTitle,
+                    style: const TextStyle(color: Colors.black, fontSize: 18)),
+                const Icon(Icons.arrow_drop_down)
+              ],
+            ),
           ),
         ),
         Row(
@@ -138,10 +213,15 @@ class _UploadState extends State<Upload> {
         itemBuilder: (BuildContext context, int index) {
           // 근데 여기서 data 로 들어가는 내용이 뭐지??? 실제 함수가 실행되는 _photoWidget 에서 주입되는건가?
           return _photoWidget(imageList[index], 200, builder: (data) {
-            // 선택된 이미지가 selectedImage 에
-            return Opacity(
-                opacity: imageList[index] == selectedImage ? 0.3 : 1,
-                child: Image.memory(data, fit: BoxFit.cover));
+            return GestureDetector(
+              onTap: () {
+                selectedImage = imageList[index];
+                update();
+              },
+              child: Opacity(
+                  opacity: imageList[index] == selectedImage ? 0.3 : 1,
+                  child: Image.memory(data, fit: BoxFit.cover)),
+            );
           });
         });
   }

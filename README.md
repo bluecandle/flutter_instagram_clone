@@ -115,5 +115,43 @@ return GridView.builder(
 ## 강의 7 업로드 화면 기능 개발
 https://www.youtube.com/watch?v=1gLukLy2LJ0&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=7
 
-- PhotoManager
+- PhotoManager package
+    - 예외 발생 : *PlatformException (PlatformException(STORAGE_NOT_LEGACY, Use `requestLegacyExternalStorage` when your project is targeting above Android Q., null, null))* 에러
+    - 해결 : AndroidManifest.xml 파일에 application 레벨에 `android:requestLegacyExternalStorage="true”` 지정해주면 됨.
+    
+    ```xml
+    <application
+    	~~~
+    	~~~
+    	android:requestLegacyExternalStorage="true”
+    ```
+    
 - builder 함수를 매개변수로 지정하여 같은 _photoWidet 함수를 호출하지만 조금 다른 결과물이 나오도록 만듦.
+- state 업데이트를 할 때마다 화면 전체가 깜빡거리는 (업데이트 되는 것처럼 보이는) 현상은 처리하지 않고 넘어감.
+- `showModalBottomSheet`: 화면 아래에서 modal 밀려 올라오는 위젯
+- 상단에 드래그가 가능하다는 의미를 나타내는 형태를 이렇게 구현 가능.
+    
+    ```dart
+    Center(
+        child: Container(
+          margin: const EdgeInsets.only(top: 7),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.black54,
+          ),
+          width: 40,
+          height: 4,
+        ),
+      )
+    ```
+    
+
+```dart
+// showModalBottomSheet 에서
+// 화면 전체를 꽉 채우지만, 화면 상단을 벗어나지는 않는 정도로 화면을 두기 위한 옵션 설정 요령
+constraints: BoxConstraints(
+maxHeight: MediaQuery.of(context).size.height -
+MediaQuery.of(context).padding.top),
+```
+## 강의 8 활동 페이지 화면 UI
+https://www.youtube.com/watch?v=y6SgDMFg-Yw&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=8
