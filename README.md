@@ -155,3 +155,56 @@ MediaQuery.of(context).padding.top),
 ```
 ## 강의 8 활동 페이지 화면 UI
 https://www.youtube.com/watch?v=y6SgDMFg-Yw&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=8
+
+- 하나의 컴포넌트 안에서 그룹을 나눠보자 -> row, column 을 놓고 거기다가 하나씩 채워서 쌓는 느낌으로 구성.
+
+## 강의 9 마이페이지 UI
+https://www.youtube.com/watch?v=22KWCrhaviE&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=9
+- Row > mainAxisAlignment: MainAxisAlignment.spaceAround, spaceBetween ,... 하나씩 넣어보면서 결정하면 좋다.
+- 컴포넌트간 공간을 확보하고 싶을 때는, sizedbox & padding 을 활용해보면 어지간하면 해결할 수 있다.
+- 가로 스크롤링 뷰를 만드는 거 해봄.
+    - `scrollDirection: Axis.horizontal,`
+- 프로필 카드 우상단에 x 버튼을 놓기 위해서 Stack & Positioned 사용.
+- Stack 에 children 으로 nested 된 container 의 크기가 꽉 차지 않는다면 Positioned 로 감싼 후 사방의 값을 0 으로 주는 것도 방법.
+
+### 믹스인
+
+```java
+믹스인mixin. with를 사용하면 상속하지 않고 다른 클래스 기능 overwritte가능.class Goblin implements Monster{
+	@override
+    void attack(){
+    	print('고블린 공격');
+    }
+}
+
+class DarkGoblin extends Goblin with Hero{
+
+} //다크 고블린은 고블린이기도 하며, 히어로이기도 하며, 몬스터이기도 함. => 다형성!
+
+```
+
+출처 [https://at0z.tistory.com/155](https://at0z.tistory.com/155)
+
+```dart
+// TickerProviderStateMixin : TabController 를 사용하기 위함
+class _MyPageState extends State<MyPage> with TickerProviderStateMixin {
+```
+
+### TabBar
+
+`TickerProviderStateMixin, TabController`
+
+### GridView
+
+```dart
+// builder 는 가장 상위에 스크롤뷰가 있어서, physics 무효화 시켜야함,
+// 오호...이건 무슨 말이지? gridView builder 최상위에 있다는건가 아니면 아래 build 함수에서 _tabView 함수가 호출되는 구조인데
+// 아래 build 함수에서 스크롤뷰로 감싸고 있기 때문에 그렇다는건가?
+// 이거 끄면, 화면 전체 스크롤이 사라짐 -> 사진 내려간 상태에서 다시 화면 올릴 수 없는 상태가 됨. 그리드뷰 쓰는 환경인데, 스크롤뷰를 같이 쓰고있다?? 그러면 아래 옵션 고려!
+physics: const NeverScrollableScrollPhysics(),
+shrinkWrap: true,
+```
+
+# 강의 10 파이어베이스 세팅 및 구글 로그인
+
+[https://www.youtube.com/watch?v=HNN5jsYOd_g&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=10](https://www.youtube.com/watch?v=HNN5jsYOd_g&list=PLgRxBCVPaZ_1iBe1v3-ZSSzHGdQo7AZPq&index=10)

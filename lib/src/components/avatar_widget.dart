@@ -71,6 +71,5 @@ class AvatarWidget extends StatelessWidget {
       case AvatarType.TYPE3:
         return type3Widget();
     }
-    return Container();
   }
 }

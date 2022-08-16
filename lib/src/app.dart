@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clone_instagram/src/components/image_data.dart';
 import 'package:flutter_clone_instagram/src/controller/bottom_nav_controller.dart';
+import 'package:flutter_clone_instagram/src/pages/active_history.dart';
 import 'package:flutter_clone_instagram/src/pages/home.dart';
+import 'package:flutter_clone_instagram/src/pages/mypage.dart';
 import 'package:flutter_clone_instagram/src/pages/search.dart';
 import 'package:get/get.dart';
 
@@ -39,9 +41,9 @@ class App extends GetView<BottomNavController> {
                               builder: (context) => const Search());
                         },
                       ),
-                      Container(child: Center(child: Text('UPLOAD'))),
-                      Container(child: Center(child: Text('ACTIVITY'))),
-                      Container(child: Center(child: Text('MYPAGE'))),
+                      Container(), // 원래 Upload가 있던 자리. bottom navigation 에 보이는 것과 index 자리가 매치되기 때문에, 빈거라도 둬야함.
+                      const ActiveHistory(),
+                      const MyPage()
                     ],
                   ),
 
